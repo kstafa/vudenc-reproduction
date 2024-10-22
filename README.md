@@ -42,3 +42,18 @@ Now you're ready to run the project. Follow the instructions in the main Python 
 deactivate
 ```
 
+---
+
+## Copyright and Attribution
+
+This project is a minimal reproduction of the Vudenc project for educational purposes. All intellectual property rights for the original work, including the research paper titled *[Deep learning-based Vulnerability Detection](https://arxiv.org/pdf/2201.08441)* and the [original repository](https://github.com/LauraWartschinski/VulnerabilityDetection), are retained by the following authors:
+
+- Laura Wartschinski
+- Yannic Noller
+- Thomas Vogel
+- Timo Kehrer
+- Lars Grunske
+
+For more details on the original work and research, please refer to the [paper](https://arxiv.org/pdf/2201.08441) and the [original GitHub repository](https://github.com/LauraWartschinski/VulnerabilityDetection).
+
+
