@@ -6,6 +6,7 @@ from gensim.models.word2vec import LineSentence
 from gensim.utils import tokenize
 from nltk.tokenize import sent_tokenize
 from tqdm import tqdm
+import time 
 
 def prepare_corpus_in_chunks(input_file, output_file, chunk_size=10 * 1024 * 1024):
     """
@@ -56,29 +57,62 @@ def main():
     sentences = LineSentence(corpus_file)
 
     # Trying out different parameters
-    for mincount in [10, 30, 50, 100, 300, 500, 5000]:
-        for epochs in [1, 5, 10, 30, 50, 100]:
-            for s in [5, 10, 15, 30, 50, 75, 100, 200, 300]:
+    # for mincount in [10, 30, 50, 100, 300, 500, 5000]:
+    #     for epochs in [1, 5, 10, 30, 50, 100]:
+    #         for s in [5, 10, 15, 30, 50, 75, 100, 200, 300]:
 
-                print(f"\n\n{mode} W2V model with min count {mincount}, {epochs} epochs, and size {s}")
-                fname = f"w2v/word2vec_{mode}{mincount}-{epochs}-{s}.model"
+    #             print(f"\n\n{mode} W2V model with min count {mincount}, {epochs} epochs, and size {s}")
+    #             fname = f"w2v/word2vec_{mode}{mincount}-{epochs}-{s}.model"
 
-                if os.path.isfile(fname):
-                    print("Model already exists.")
-                    continue
-                else:
-                    print("Calculating model...")
-                    # Training the model using LineSentence
-                    model = Word2Vec(
-                        sentences=sentences,
-                        vector_size=s,
-                        min_count=mincount,
-                        epochs=epochs,
-                        workers=4
-                    )
-                    # Saving the model
-                    model.save(fname)
-                    print(f"Model saved to {fname}")
+    #             if os.path.isfile(fname):
+    #                 print("Model already exists.")
+    #                 continue
+    #             else:
+    #                 print("Calculating model...")
+    #                 # Training the model using LineSentence
+    #                 model = Word2Vec(
+    #                     sentences=sentences,
+    #                     vector_size=s,
+    #                     min_count=mincount,
+    #                     epochs=epochs,
+    #                     workers=4
+    #                 )
+    #                 # Saving the model
+    #                 model.save(fname)
+    #                 print(f"Model saved to {fname}")
+
+    # Our final word2vec model will encode code tokens in numerical vectors of 200 dimensions, 
+    # not replace any strings, 
+    # require a min count of 10 for tokens to be included, 
+    # and will be trained for 100 iterations.
+
+    optimal_size = 10 
+    optimal_iterations = 1 
+    optimal_min_count = 10 
+
+    print(f"\n\n{mode} W2V model with min count {optimal_min_count}, {optimal_iterations} epochs, and size {optimal_size}")
+    fname = f"w2v/word2vec_{mode}{optimal_min_count}-{optimal_iterations}-{optimal_size}.model"
+
+    if os.path.isfile(fname):
+        print("Model already exists.")
+    else:
+        start = time.time() 
+        print("Calculating model...")
+        # Training the model using LineSentence
+        model = Word2Vec(
+            sentences=sentences,
+            vector_size=optimal_size,
+            min_count=optimal_min_count,
+            epochs=optimal_iterations,
+            workers=12
+        )
+        # Saving the model
+        model.save(fname)
+        end = time.time()
+
+        print(f"Model toked {end-start} seconds")
+        print(f"Model saved to {fname}")
+
 
 if __name__ == "__main__":
     # Ensure NLTK punkt tokenizer is available

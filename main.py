@@ -1,8 +1,20 @@
-from gensim.models import Word2Vec
+from w2c_fetch_repos import fetch_repositories
 
-# Load the model
-model = Word2Vec.load('w2v/word2vec_withString10-1-5.model')
+def main():
+    while True: 
+        print("\n--- VUDENC - Version 1.0 ---")
+        print("1. Exit")
+        print("2. Create corpus with Python code")
 
-# Find similar words
-similar_words = model.wv.most_similar("if")
-print(similar_words)
+        choice = input("Enter your choice: ")
+
+        if choice == "1":   
+            print("Exiting...")
+            break
+        elif choice == "2":
+            fetch_repositories()
+        else:
+            print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+    main()

@@ -6,6 +6,8 @@ venv/
 
 # Ignore all .model files in the w2v folder
 w2v/*.model
+w2v/*.model.syn1neg.npy
+w2v/*.model.wv.vectors.npy
 
 # Ignore the pythontraining_withString_X file but not the compressed version
 w2v/pythontraining_withString_X
